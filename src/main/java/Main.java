@@ -9,32 +9,32 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args) {
         try {
-            Map<Long, List<Preference>> data = getData();
+            Map<Long, List<UserPreference>> data = getData();
             System.out.println(data);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    private static Map<Long, List<Preference>> getData() throws IOException {
+    private static Map<Long, List<UserPreference>> getData() throws IOException {
         String file = "src/main/resources/userItem.data";
         BufferedReader in = new BufferedReader(new FileReader(file));
 
-        Map<Long, List<Preference>> result = new HashMap<Long, List<Preference>>();
+        Map<Long, List<UserPreference>> result = new HashMap<Long, List<UserPreference>>();
 
         String line;
         while((line = in.readLine()) != null) {
             String[] data = line.split(",");
 
-            List<Preference> preferences;
+            List<UserPreference> preferences;
             if (!result.containsKey(Long.parseLong(data[0]))) {
-                preferences = new ArrayList<Preference>();
+                preferences = new ArrayList<UserPreference>();
             } else {
                 preferences = result.get(Long.parseLong(data[0]));
             }
 
-            preferences.add(new Preference(
+            preferences.add(new UserPreference(
+                    new User(Long.parseLong(data[0])),
                     new Article(Long.parseLong(data[1])),
                     Double.parseDouble(data[2])
             ));
