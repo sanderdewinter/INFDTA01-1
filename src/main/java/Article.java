@@ -1,7 +1,7 @@
-public class Articles {
+public class Article {
     private long id;
 
-    public Articles(long id) {
+    public Article(long id) {
         this.id = id;
     }
 
