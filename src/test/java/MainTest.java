@@ -21,4 +21,18 @@ public class MainTest {
 
         Assert.assertNotNull(data);
     }
+
+    @Test
+    public void testEuclidean() throws IOException {
+        Map<Long, Map<Long, Preference>> data = main.getData();
+
+        ISimilarity euclidean = new Euclidean();
+
+        double distance = euclidean.getDistance(
+                data.get(1L),
+                data.get(3L)
+        );
+
+        Assert.assertNotNull(distance);
+    }
 }
