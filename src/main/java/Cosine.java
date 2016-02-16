@@ -1,7 +1,7 @@
 import java.util.Map;
 
 public class Cosine implements ISimilarity {
-    public double getDistance(Map<Long, Preference> originUser, Map<Long, Preference> targetUser) {
+    public double getSimilarity(Map<Long, Preference> originUser, Map<Long, Preference> targetUser) {
         double sumOriginTimesTargetRating = 0.0;
         double sumSquarePowerOriginRating = 0.0;
         double sumSquarePowerTargetRating = 0.0;

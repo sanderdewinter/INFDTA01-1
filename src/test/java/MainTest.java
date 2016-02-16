@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 public class MainTest {
@@ -25,9 +24,9 @@ public class MainTest {
     public void testEuclidean() {
         ISimilarity euclidean = new Euclidean();
 
-        double distance = euclidean.getDistance(
+        double distance = euclidean.getSimilarity(
                 data.get(1L),
-                data.get(3L)
+                data.get(2L)
         );
 
         Assert.assertNotNull(distance);
@@ -37,7 +36,7 @@ public class MainTest {
     public void testPearson() {
         ISimilarity pearson = new Pearson();
 
-        double distance = pearson.getDistance(
+        double distance = pearson.getSimilarity(
                 data.get(1L),
                 data.get(5L)
         );
@@ -49,7 +48,7 @@ public class MainTest {
     public void testCosine() {
         ISimilarity cosine = new Cosine();
 
-        double distance = cosine.getDistance(
+        double distance = cosine.getSimilarity(
                 data.get(3L),
                 data.get(1L)
         );

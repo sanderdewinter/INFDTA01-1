@@ -1,7 +1,7 @@
 import java.util.Map;
 
 public class Pearson implements ISimilarity {
-    public double getDistance(Map<Long, Preference> originUser, Map<Long, Preference> targetUser) {
+    public double getSimilarity(Map<Long, Preference> originUser, Map<Long, Preference> targetUser) {
         double sumProductOriginTarget = 0.0;
         double sumOriginRating = 0.0;
         double sumTargetRating = 0.0;
