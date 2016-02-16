@@ -17,7 +17,7 @@ public class MainTest {
 
     @Test
     public void assignment1() throws IOException {
-        Map<Long, List<UserPreference>> data = main.getData();
+        Map<Long, Map<Long, Preference>> data = main.getData();
 
         Assert.assertNotNull(data);
     }

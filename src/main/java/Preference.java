@@ -1,10 +1,8 @@
-public class UserPreference {
-    private User user;
+public class Preference {
     private Article article;
     private double rating;
 
-    public UserPreference(User user, Article article, double rating) {
-        this.user = user;
+    public Preference(Article article, double rating) {
         this.article = article;
         this.rating = rating;
     }
@@ -23,13 +21,5 @@ public class UserPreference {
 
     public void setArticle(Article article) {
         this.article = article;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
