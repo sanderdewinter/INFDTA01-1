@@ -7,16 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main(String[] args) {
-        try {
-            Map<Long, List<UserPreference>> data = getData();
-            System.out.println(data);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static Map<Long, List<UserPreference>> getData() throws IOException {
+    public Map<Long, List<UserPreference>> getData() throws IOException {
         String file = "src/main/resources/userItem.data";
         BufferedReader in = new BufferedReader(new FileReader(file));
 
