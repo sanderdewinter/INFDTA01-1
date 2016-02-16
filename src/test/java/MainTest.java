@@ -8,29 +8,38 @@ import java.util.Map;
 
 public class MainTest {
 
-    private Main main;
+    private Map<Long, Map<Long, Preference>> data;
 
     @Before
-    public void setup() {
-        this.main = new Main();
+    public void setup() throws IOException {
+        Main main = new Main();
+        this.data = main.getData();
     }
 
     @Test
-    public void assignment1() throws IOException {
-        Map<Long, Map<Long, Preference>> data = main.getData();
-
+    public void assignment1() {
         Assert.assertNotNull(data);
     }
 
     @Test
-    public void testEuclidean() throws IOException {
-        Map<Long, Map<Long, Preference>> data = main.getData();
-
+    public void testEuclidean() {
         ISimilarity euclidean = new Euclidean();
 
         double distance = euclidean.getDistance(
                 data.get(1L),
                 data.get(3L)
+        );
+
+        Assert.assertNotNull(distance);
+    }
+
+    @Test
+    public void testPearson() {
+        ISimilarity pearson = new Pearson();
+
+        double distance = pearson.getDistance(
+                data.get(1L),
+                data.get(5L)
         );
 
         Assert.assertNotNull(distance);
