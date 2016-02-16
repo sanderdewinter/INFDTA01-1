@@ -44,4 +44,16 @@ public class MainTest {
 
         Assert.assertNotNull(distance);
     }
+
+    @Test
+    public void testCosine() {
+        ISimilarity cosine = new Cosine();
+
+        double distance = cosine.getDistance(
+                data.get(3L),
+                data.get(1L)
+        );
+
+        Assert.assertNotNull(distance);
+    }
 }
