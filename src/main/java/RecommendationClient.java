@@ -22,7 +22,7 @@ public class RecommendationClient {
         List<List<Double>> result = new ArrayList<List<Double>>();
 
         for (Long userId : data.keySet()) {
-            if (userId != originUserId) {
+            if (userId != originUserId && hasUnratedItems(origin, data.get(userId))) {
                 double similarity = similarityAlgorithm.getSimilarity(origin, data.get(userId));
 
                 if (similarity >= threshold) {
@@ -41,5 +41,14 @@ public class RecommendationClient {
         }
 
         return result;
+    }
+
+    private boolean hasUnratedItems(Map<Long, Preference> origin, Map<Long, Preference> target) {
+        for (Long itemId : target.keySet()) {
+            if (!origin.containsKey(itemId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
