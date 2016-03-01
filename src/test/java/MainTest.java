@@ -62,6 +62,9 @@ public class MainTest {
         RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
         List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(3, 7, 0.01);
         System.out.println(neighbours);
+
+        List<List<Double>> nearestNeighboursCosine = new RecommendationClient(new Cosine()).getNearestNeighbours(3, 7, 0.35);
+        List<List<Double>> nearestNeighboursEuclidean = new RecommendationClient(new Euclidean()).getNearestNeighbours(3, 7, 0.35);
     }
 
     @Test
