@@ -11,6 +11,27 @@ public class Main {
         return data;
     }
 
+    public static void addData(Long userId, Long articleId, Double rating) {
+        if (data.containsKey(userId)) {
+            Map<Long, Preference> preferences = data.get(userId);
+            preferences.put(
+                    articleId,
+                    new Preference(new Article(articleId), rating)
+            );
+
+            data.put(userId, preferences);
+        } else {
+            HashMap<Long, Preference> preferences = new HashMap<Long, Preference>();
+
+            preferences.put(
+                    articleId,
+                    new Preference(new Article(articleId), rating)
+            );
+
+            data.put(userId, preferences);
+        }
+    }
+
     public static void setData() throws IOException {
         String file = "src/main/resources/userItem.data";
         BufferedReader in = new BufferedReader(new FileReader(file));

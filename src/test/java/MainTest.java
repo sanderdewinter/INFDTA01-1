@@ -67,11 +67,18 @@ public class MainTest {
     @Test
     public void testGetPredictedRating() {
         RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
-        Double predictedRating1 = recommendationClient.getPredictedRating(7L, 101L);
-        Double predictedRating2 = recommendationClient.getPredictedRating(7L, 103L);
-        Double predictedRating3 = recommendationClient.getPredictedRating(7L, 106L);
-        System.out.println(predictedRating1);
-        System.out.println(predictedRating2);
-        System.out.println(predictedRating3);
+        Double predictedRating101 = recommendationClient.getPredictedRating(7L, 101L);
+        Double predictedRating103 = recommendationClient.getPredictedRating(7L, 103L);
+        Double predictedRating106 = recommendationClient.getPredictedRating(7L, 106L);
+
+        int sizeBefore = Main.getData().get(7L).size();
+        Main.addData(7L, 106L, 2.8);
+        Assert.assertTrue(Main.getData().get(7L).size() == sizeBefore + 1);
+
+        Double predictedRating101New = recommendationClient.getPredictedRating(7L, 101L);
+        Double predictedRating103New = recommendationClient.getPredictedRating(7L, 103L);
+
+        Assert.assertNotSame(predictedRating101New, predictedRating101);
+        Assert.assertNotSame(predictedRating103New, predictedRating103);
     }
 }
