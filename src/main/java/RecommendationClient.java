@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.*;
 
 public class RecommendationClient {
@@ -15,7 +14,7 @@ public class RecommendationClient {
             this.similarityAlgorithm = similarityAlgorithm;
     }
 
-    public List<List<Double>> getNearestNeighbours(int amountOfNeighbours, long originUserId, double threshold) throws IOException {
+    public List<List<Double>> getNearestNeighbours(int amountOfNeighbours, long originUserId, double threshold) {
         Map<Long, Map<Long, Preference>> data = Main.getData();
         Map<Long, Preference> origin = data.get(originUserId);
 
@@ -41,6 +40,26 @@ public class RecommendationClient {
         }
 
         return result;
+    }
+
+    public Double getPredictedRating(Long targetId, Long articleId) {
+        Map<Long, Map<Long, Preference>> data = Main.getData();
+        List<List<Double>> neighbours = getNearestNeighbours(3, targetId, 0.01);
+
+        double sumRatingTimesCoefficient = 0.0;
+        double sumCoefficient = 0.0;
+        for (List<Double> neighbour : neighbours) {
+            Map<Long, Preference> userPreference = data.get(neighbour.get(0).longValue());
+
+            if (userPreference.containsKey(articleId)) {
+                Preference preference = userPreference.get(articleId);
+
+                sumRatingTimesCoefficient += preference.getRating() * neighbour.get(1);
+                sumCoefficient += neighbour.get(1);
+            }
+        }
+
+        return sumRatingTimesCoefficient / sumCoefficient;
     }
 
     private boolean hasUnratedItems(Map<Long, Preference> origin, Map<Long, Preference> target) {

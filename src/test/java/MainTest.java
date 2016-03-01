@@ -12,6 +12,7 @@ public class MainTest {
 
     @Before
     public void setup() throws IOException {
+        Main.setData();
         this.data = Main.getData();
     }
 
@@ -57,9 +58,20 @@ public class MainTest {
     }
 
     @Test
-    public void testRecommendationClient() throws IOException {
-        RecommendationClient recommendationClient = new RecommendationClient(new Cosine());
-        List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(3, 7, 0.35);
+    public void testGetNearestNeighbours() {
+        RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
+        List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(3, 7, 0.01);
         System.out.println(neighbours);
+    }
+
+    @Test
+    public void testGetPredictedRating() {
+        RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
+        Double predictedRating1 = recommendationClient.getPredictedRating(7L, 101L);
+        Double predictedRating2 = recommendationClient.getPredictedRating(7L, 103L);
+        Double predictedRating3 = recommendationClient.getPredictedRating(7L, 106L);
+        System.out.println(predictedRating1);
+        System.out.println(predictedRating2);
+        System.out.println(predictedRating3);
     }
 }

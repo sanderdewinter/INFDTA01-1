@@ -5,7 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    public static Map<Long, Map<Long, Preference>> getData() throws IOException {
+    private static Map<Long, Map<Long, Preference>> data;
+
+    public static Map<Long, Map<Long, Preference>> getData() {
+        return data;
+    }
+
+    public static void setData() throws IOException {
         String file = "src/main/resources/userItem.data";
         BufferedReader in = new BufferedReader(new FileReader(file));
 
@@ -37,6 +43,6 @@ public class Main {
         }
         in.close();
 
-        return result;
+        data = result;
     }
 }
