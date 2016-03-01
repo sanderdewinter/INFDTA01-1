@@ -3,6 +3,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class MainTest {
@@ -11,8 +12,7 @@ public class MainTest {
 
     @Before
     public void setup() throws IOException {
-        Main main = new Main();
-        this.data = main.getData();
+        this.data = Main.getData();
     }
 
     @Test
@@ -54,5 +54,12 @@ public class MainTest {
         );
 
         Assert.assertNotNull(distance);
+    }
+
+    @Test
+    public void testRecommendationClient() throws IOException {
+        RecommendationClient recommendationClient = new RecommendationClient(new Cosine());
+        List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(3, 7, 0.35);
+        System.out.println(neighbours);
     }
 }

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    public Map<Long, Map<Long, Preference>> getData() throws IOException {
+    public static Map<Long, Map<Long, Preference>> getData() throws IOException {
         String file = "src/main/resources/userItem.data";
         BufferedReader in = new BufferedReader(new FileReader(file));
 
