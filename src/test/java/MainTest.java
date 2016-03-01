@@ -64,7 +64,9 @@ public class MainTest {
         System.out.println(neighbours);
 
         List<List<Double>> nearestNeighboursCosine = new RecommendationClient(new Cosine()).getNearestNeighbours(3, 7, 0.35);
+        System.out.println(nearestNeighboursCosine);
         List<List<Double>> nearestNeighboursEuclidean = new RecommendationClient(new Euclidean()).getNearestNeighbours(3, 7, 0.35);
+        System.out.println(nearestNeighboursEuclidean);
     }
 
     @Test
