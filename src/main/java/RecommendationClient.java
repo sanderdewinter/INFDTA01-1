@@ -15,7 +15,7 @@ public class RecommendationClient {
     }
 
     public List<List<Double>> getNearestNeighbours(int amountOfNeighbours, long originUserId, double threshold) {
-        Map<Long, Map<Long, Preference>> data = Main.getData();
+        Map<Long, Map<Long, Preference>> data = Main.data;
         Map<Long, Preference> origin = data.get(originUserId);
 
         List<List<Double>> result = new ArrayList<List<Double>>();
@@ -43,7 +43,7 @@ public class RecommendationClient {
     }
 
     public Double getPredictedRating(Long targetId, Long articleId) {
-        Map<Long, Map<Long, Preference>> data = Main.getData();
+        Map<Long, Map<Long, Preference>> data = Main.data;
         List<List<Double>> neighbours = getNearestNeighbours(3, targetId, 0.01);
 
         double sumRatingTimesCoefficient = 0.0;

@@ -13,7 +13,7 @@ public class MainTest {
     @Before
     public void setup() throws IOException {
         Main.setData();
-        this.data = Main.getData();
+        this.data = Main.data;
     }
 
     @Test
@@ -37,30 +37,30 @@ public class MainTest {
     public void testPearson() {
         ISimilarity pearson = new Pearson();
 
-        double distance = pearson.getSimilarity(
-                data.get(1L),
-                data.get(5L)
+        double similarity = pearson.getSimilarity(
+                data.get(7L),
+                data.get(3L)
         );
 
-        Assert.assertNotNull(distance);
+        Assert.assertNotNull(similarity);
     }
 
     @Test
     public void testCosine() {
         ISimilarity cosine = new Cosine();
 
-        double distance = cosine.getSimilarity(
-                data.get(3L),
-                data.get(1L)
+        double similarity = cosine.getSimilarity(
+                data.get(7L),
+                data.get(3L)
         );
 
-        Assert.assertNotNull(distance);
+        Assert.assertNotNull(similarity);
     }
 
     @Test
     public void testGetNearestNeighbours() {
         RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
-        List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(3, 7, 0.01);
+        List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(8, 7, -2);
         System.out.println(neighbours);
 
         List<List<Double>> nearestNeighboursCosine = new RecommendationClient(new Cosine()).getNearestNeighbours(3, 7, 0.35);
@@ -76,9 +76,9 @@ public class MainTest {
         Double predictedRating103 = recommendationClient.getPredictedRating(7L, 103L);
         Double predictedRating106 = recommendationClient.getPredictedRating(7L, 106L);
 
-        int sizeBefore = Main.getData().get(7L).size();
+        int sizeBefore = Main.data.get(7L).size();
         Main.addData(7L, 106L, 2.8);
-        Assert.assertTrue(Main.getData().get(7L).size() == sizeBefore + 1);
+        Assert.assertTrue(Main.data.get(7L).size() == sizeBefore + 1);
 
         Double predictedRating101New = recommendationClient.getPredictedRating(7L, 101L);
         Double predictedRating103New = recommendationClient.getPredictedRating(7L, 103L);
