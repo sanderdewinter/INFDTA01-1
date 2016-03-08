@@ -1,15 +1,13 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
-    private static Map<Long, Map<Long, Preference>> data;
-
-    public static Map<Long, Map<Long, Preference>> getData() {
-        return data;
-    }
+    public static Map<Long, Map<Long, Preference>> data;
 
     public static void addData(Long userId, Long articleId, Double rating) {
         if (data.containsKey(userId)) {
