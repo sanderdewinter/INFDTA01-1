@@ -6,12 +6,12 @@ public class Cosine implements ISimilarity {
         double sumSquarePowerOriginRating = 0.0;
         double sumSquarePowerTargetRating = 0.0;
 
-        for (Long articleId : originUser.keySet()) {
+        for (Long articleId : targetUser.keySet()) {
             Preference target = targetUser.get(articleId);
             Preference origin = originUser.get(articleId);
 
-            if (target == null) {
-                target = new Preference(origin.getArticle(), 0.0);
+            if (origin == null) {
+                origin = new Preference(target.getArticle(), 0.0);
             }
 
             sumOriginTimesTargetRating += target.getRating() * origin.getRating();
