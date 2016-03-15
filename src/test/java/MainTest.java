@@ -26,8 +26,8 @@ public class MainTest {
         ISimilarity euclidean = new Euclidean();
 
         double distance = euclidean.getSimilarity(
-                data.get(1L),
-                data.get(2L)
+                data.get(3L),
+                data.get(7L)
         );
 
         Assert.assertNotNull(distance);
@@ -38,8 +38,8 @@ public class MainTest {
         ISimilarity pearson = new Pearson();
 
         double similarity = pearson.getSimilarity(
-                data.get(7L),
-                data.get(3L)
+                data.get(3L),
+                data.get(4L)
         );
 
         Assert.assertNotNull(similarity);
@@ -50,8 +50,8 @@ public class MainTest {
         ISimilarity cosine = new Cosine();
 
         double similarity = cosine.getSimilarity(
-                data.get(7L),
-                data.get(3L)
+                data.get(3L),
+                data.get(7L)
         );
 
         Assert.assertNotNull(similarity);
@@ -60,12 +60,12 @@ public class MainTest {
     @Test
     public void testGetNearestNeighbours() {
         RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
-        List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(8, 7, -2);
+        List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(3, 7, 0.35);
         System.out.println(neighbours);
 
         List<List<Double>> nearestNeighboursCosine = new RecommendationClient(new Cosine()).getNearestNeighbours(3, 7, 0.35);
         System.out.println(nearestNeighboursCosine);
-        List<List<Double>> nearestNeighboursEuclidean = new RecommendationClient(new Euclidean()).getNearestNeighbours(3, 7, 0.35);
+        List<List<Double>> nearestNeighboursEuclidean = new RecommendationClient(new Euclidean()).getNearestNeighbours(3, 2, 0.35);
         System.out.println(nearestNeighboursEuclidean);
     }
 
@@ -75,6 +75,8 @@ public class MainTest {
         Double predictedRating101 = recommendationClient.getPredictedRating(7L, 101L);
         Double predictedRating103 = recommendationClient.getPredictedRating(7L, 103L);
         Double predictedRating106 = recommendationClient.getPredictedRating(7L, 106L);
+
+        Double predictedRating101user4 = recommendationClient.getPredictedRating(4L, 101L);
 
         int sizeBefore = Main.data.get(7L).size();
         Main.addData(7L, 106L, 2.8);

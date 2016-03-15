@@ -15,7 +15,7 @@ public class RecommendationClient {
     }
 
     public List<List<Double>> getNearestNeighbours(int amountOfNeighbours, long originUserId, double threshold) {
-        Map<Long, Map<Long, Preference>> data = Main.data;
+        Map<Long, Map<Long, Preference>> data = MovieLensService.data;
         Map<Long, Preference> origin = data.get(originUserId);
 
         List<List<Double>> result = new ArrayList<List<Double>>();
@@ -36,6 +36,29 @@ public class RecommendationClient {
                         result.remove(result.size() - 1);
                     }
                 }
+            }
+        }
+
+        return result;
+    }
+
+    public List<List<Double>> getTopRecommendations(int amountOfRecommendations, Long originUserId) {
+        List<Movie> movies = MovieLensService.movies;
+
+        List<List<Double>> result = new ArrayList<List<Double>>();
+
+        for (Movie movie : movies) {
+            Double predictedRating = getPredictedRating(originUserId, movie.getId());
+
+            List<Double> row = new ArrayList<Double>();
+            row.add((double) movie.getId());
+            row.add(predictedRating);
+
+            result.add(row);
+            Collections.sort(result, comparator);
+
+            if (amountOfRecommendations < result.size()) {
+                result.remove(result.size() - 1);
             }
         }
 

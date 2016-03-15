@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class MovieLensService {
     public static List<Movie> movies;
+    public static List<User> users;
+
+    public static Map<Long, Map<Long, Preference>> data;
 
     public static void loadMovies() throws IOException, ParseException {
         String file = "src/main/resources/u.item";
@@ -52,7 +54,69 @@ public class MovieLensService {
                     genres
             ));
         }
+        in.close();
 
         movies = result;
+    }
+
+    public static void loadUsers() throws IOException {
+        String file = "src/main/resources/u.user";
+        BufferedReader in = new BufferedReader(new FileReader(file));
+
+        List<User> result = new ArrayList<User>();
+
+        String line;
+        while((line = in.readLine()) != null) {
+            String[] data = line.split(Pattern.quote("|"));
+
+            result.add(new User(
+                    Integer.valueOf(data[0]),
+                    Integer.valueOf(data[1]),
+                    data[2].charAt(0),
+                    data[3],
+                    data[4]
+            ));
+        }
+        in.close();
+
+        users = result;
+    }
+
+    public static void loadUserPreference() throws IOException {
+        String file = "src/main/resources/u.data";
+        BufferedReader in = new BufferedReader(new FileReader(file));
+
+        Map<Long, Map<Long, Preference>> result = new HashMap<Long, Map<Long, Preference>>();
+
+        String line;
+        while((line = in.readLine()) != null) {
+            String[] data = line.split("\t");
+
+            Map<Long, Preference> preferences;
+            if (!result.containsKey(Long.parseLong(data[0]))) {
+                preferences = new HashMap<Long, Preference>();
+            } else {
+                preferences = result.get(Long.parseLong(data[0]));
+            }
+
+            int movieId = Integer.valueOf(data[1]) - 1;
+
+            preferences.put(
+                    Long.parseLong(data[1]),
+                    new Preference(
+                            movies.get(movieId),
+                            Double.parseDouble(data[2]),
+                            Instant.ofEpochSecond(Long.parseLong(data[3]))
+                    )
+            );
+
+            result.put(
+                    Long.parseLong(data[0]),
+                    preferences
+            );
+        }
+        in.close();
+
+        data = result;
     }
 }
