@@ -2,6 +2,8 @@ import java.util.*;
 
 public class RecommendationClient {
 
+    private Map<Long, Map<Long, Preference>> data;
+
     private ISimilarity similarityAlgorithm;
 
     private Comparator<List<Double>> comparator = new Comparator<List<Double>>() {
@@ -12,6 +14,11 @@ public class RecommendationClient {
 
     public RecommendationClient(ISimilarity similarityAlgorithm) {
             this.similarityAlgorithm = similarityAlgorithm;
+    }
+
+    public RecommendationClient(Map<Long, Map<Long, Preference>> data, ISimilarity similarityAlgorithm) {
+        this.data = data;
+        this.similarityAlgorithm = similarityAlgorithm;
     }
 
     public List<List<Double>> getNearestNeighbours(int amountOfNeighbours, long originUserId, double threshold) {
@@ -48,7 +55,10 @@ public class RecommendationClient {
         List<List<Double>> result = new ArrayList<List<Double>>();
 
         for (Movie movie : movies) {
-            Double predictedRating = getPredictedRating(originUserId, movie.getId());
+            Double predictedRating = getPredictedRating(originUserId, movie.getId(), 25, 0.35);
+            if (predictedRating == null) {
+                continue;
+            }
 
             List<Double> row = new ArrayList<Double>();
             row.add((double) movie.getId());
@@ -66,8 +76,12 @@ public class RecommendationClient {
     }
 
     public Double getPredictedRating(Long targetId, Long articleId) {
-        Map<Long, Map<Long, Preference>> data = Main.data;
-        List<List<Double>> neighbours = getNearestNeighbours(3, targetId, 0.01);
+        return getPredictedRating(targetId, articleId, 3, 0.01);
+    }
+
+    public Double getPredictedRating(Long targetId, Long articleId, int amountOfNeighbours, Double threshold) {
+        Map<Long, Map<Long, Preference>> data = getData();
+        List<List<Double>> neighbours = getNearestNeighbours(amountOfNeighbours, targetId, threshold);
 
         double sumRatingTimesCoefficient = 0.0;
         double sumCoefficient = 0.0;
@@ -82,7 +96,11 @@ public class RecommendationClient {
             }
         }
 
-        return sumRatingTimesCoefficient / sumCoefficient;
+        if (sumCoefficient == 0.0) {
+            return null;
+        } else {
+            return sumRatingTimesCoefficient / sumCoefficient;
+        }
     }
 
     private boolean hasUnratedItems(Map<Long, Preference> origin, Map<Long, Preference> target) {
@@ -92,5 +110,13 @@ public class RecommendationClient {
             }
         }
         return false;
+    }
+
+    public Map<Long, Map<Long, Preference>> getData() {
+        return data;
+    }
+
+    public void setData(Map<Long, Map<Long, Preference>> data) {
+        this.data = data;
     }
 }

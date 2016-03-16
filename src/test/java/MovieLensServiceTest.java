@@ -14,7 +14,6 @@ public class MovieLensServiceTest {
 
     public Map<Long, Map<Long, Preference>> data;
 
-
     @Before
     public void setup() throws IOException, ParseException {
         MovieLensService.loadMovies();
@@ -34,7 +33,7 @@ public class MovieLensServiceTest {
 
     @Test
     public void testTopRecommendations() {
-        RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
+        RecommendationClient recommendationClient = new RecommendationClient(MovieLensService.data, new Pearson());
         List<List<Double>> topRecommendations = recommendationClient.getTopRecommendations(8, 186L);
         System.out.println(topRecommendations);
     }
