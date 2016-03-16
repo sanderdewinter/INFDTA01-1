@@ -50,12 +50,16 @@ public class RecommendationClient {
     }
 
     public List<List<Double>> getTopRecommendations(int amountOfRecommendations, Long originUserId) {
+        return getTopRecommendations(amountOfRecommendations, originUserId, 1);
+    }
+
+    public List<List<Double>> getTopRecommendations(int amountOfRecommendations, Long originUserId, int amountRatingsAtLeast) {
         List<Movie> movies = MovieLensService.movies;
 
         List<List<Double>> result = new ArrayList<List<Double>>();
 
         for (Movie movie : movies) {
-            Double predictedRating = getPredictedRating(originUserId, movie.getId(), 25, 0.35);
+            Double predictedRating = getPredictedRating(originUserId, movie.getId(), 25, 0.35, amountOfRecommendations);
             if (predictedRating == null) {
                 continue;
             }
@@ -76,15 +80,17 @@ public class RecommendationClient {
     }
 
     public Double getPredictedRating(Long targetId, Long articleId) {
-        return getPredictedRating(targetId, articleId, 3, 0.01);
+        return getPredictedRating(targetId, articleId, 3, 0.01, 1);
     }
 
-    public Double getPredictedRating(Long targetId, Long articleId, int amountOfNeighbours, Double threshold) {
+    public Double getPredictedRating(Long targetId, Long articleId, int amountOfNeighbours, Double threshold, int amountOfRecommendations) {
         Map<Long, Map<Long, Preference>> data = getData();
         List<List<Double>> neighbours = getNearestNeighbours(amountOfNeighbours, targetId, threshold);
 
         double sumRatingTimesCoefficient = 0.0;
         double sumCoefficient = 0.0;
+
+        int amountOfNeighBoursContainsItem = 0;
         for (List<Double> neighbour : neighbours) {
             Map<Long, Preference> userPreference = data.get(neighbour.get(0).longValue());
 
@@ -93,10 +99,11 @@ public class RecommendationClient {
 
                 sumRatingTimesCoefficient += preference.getRating() * neighbour.get(1);
                 sumCoefficient += neighbour.get(1);
+                amountOfNeighBoursContainsItem++;
             }
         }
 
-        if (sumCoefficient == 0.0) {
+        if (sumCoefficient == 0.0 || amountOfNeighBoursContainsItem < amountOfRecommendations) {
             return null;
         } else {
             return sumRatingTimesCoefficient / sumCoefficient;

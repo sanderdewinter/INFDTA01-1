@@ -37,4 +37,11 @@ public class MovieLensServiceTest {
         List<List<Double>> topRecommendations = recommendationClient.getTopRecommendations(8, 186L);
         System.out.println(topRecommendations);
     }
+
+    @Test
+    public void testTopRecommendationsFixed() {
+        RecommendationClient recommendationClient = new RecommendationClient(MovieLensService.data, new Pearson());
+        List<List<Double>> topRecommendations = recommendationClient.getTopRecommendations(8, 186L, 3);
+        System.out.println(topRecommendations);
+    }
 }
