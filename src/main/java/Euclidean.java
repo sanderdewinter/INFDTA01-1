@@ -14,7 +14,6 @@ public class Euclidean implements ISimilarity {
             }
         }
 
-        System.out.println("Distance: " + Math.sqrt(distance));
         return 1 / (1 + Math.sqrt(distance));
     }
 }

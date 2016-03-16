@@ -1,3 +1,6 @@
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import javax.swing.text.MutableAttributeSet;
 import java.util.Map;
 
 public class Pearson implements ISimilarity {
@@ -7,12 +10,14 @@ public class Pearson implements ISimilarity {
         double sumTargetRating = 0.0;
         double sumPowerOriginRating = 0.0;
         double sumPowerTargetRating = 0.0;
+        int size = 0;
 
         for (Long articleId : targetUser.keySet()) {
             Preference target = targetUser.get(articleId);
             Preference origin = originUser.get(articleId);
 
             if (origin != null) {
+                size++;
                 sumProductOriginTarget += target.getRating() * origin.getRating();
 
                 sumOriginRating += origin.getRating();
@@ -23,7 +28,7 @@ public class Pearson implements ISimilarity {
             }
         }
 
-        return (sumProductOriginTarget - ((sumOriginRating * sumTargetRating) / originUser.size())) /
-                ((sumPowerOriginRating - (Math.pow(sumOriginRating, 2) / originUser.size())) * (sumPowerTargetRating - (Math.pow(sumTargetRating, 2) / targetUser.size())));
+        return (sumProductOriginTarget - ((sumOriginRating * sumTargetRating) / size)) /
+                (Math.sqrt(((sumPowerOriginRating - (Math.pow(sumOriginRating, 2) / size)))) * Math.sqrt(sumPowerTargetRating - (Math.pow(sumTargetRating, 2) / size)));
     }
 }
