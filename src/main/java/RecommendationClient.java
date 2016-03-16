@@ -22,7 +22,7 @@ public class RecommendationClient {
     }
 
     public List<List<Double>> getNearestNeighbours(int amountOfNeighbours, long originUserId, double threshold) {
-        Map<Long, Map<Long, Preference>> data = MovieLensService.data;
+        Map<Long, Map<Long, Preference>> data = getData();
         Map<Long, Preference> origin = data.get(originUserId);
 
         List<List<Double>> result = new ArrayList<List<Double>>();

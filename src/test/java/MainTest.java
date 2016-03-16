@@ -59,19 +59,19 @@ public class MainTest {
 
     @Test
     public void testGetNearestNeighbours() {
-        RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
+        RecommendationClient recommendationClient = new RecommendationClient(this.data, new Pearson());
         List<List<Double>> neighbours = recommendationClient.getNearestNeighbours(3, 7, 0.35);
         System.out.println(neighbours);
 
-        List<List<Double>> nearestNeighboursCosine = new RecommendationClient(new Cosine()).getNearestNeighbours(3, 7, 0.35);
+        List<List<Double>> nearestNeighboursCosine = new RecommendationClient(this.data, new Cosine()).getNearestNeighbours(3, 7, 0.35);
         System.out.println(nearestNeighboursCosine);
-        List<List<Double>> nearestNeighboursEuclidean = new RecommendationClient(new Euclidean()).getNearestNeighbours(3, 2, 0.35);
+        List<List<Double>> nearestNeighboursEuclidean = new RecommendationClient(this.data, new Euclidean()).getNearestNeighbours(3, 2, 0.35);
         System.out.println(nearestNeighboursEuclidean);
     }
 
     @Test
     public void testGetPredictedRating() {
-        RecommendationClient recommendationClient = new RecommendationClient(new Pearson());
+        RecommendationClient recommendationClient = new RecommendationClient(this.data, new Pearson());
         Double predictedRating101 = recommendationClient.getPredictedRating(7L, 101L);
         Double predictedRating103 = recommendationClient.getPredictedRating(7L, 103L);
         Double predictedRating106 = recommendationClient.getPredictedRating(7L, 106L);
