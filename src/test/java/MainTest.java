@@ -74,19 +74,19 @@ public class MainTest {
         RecommendationClient recommendationClient = new RecommendationClient(this.data, new Pearson());
         List<List<Double>> nearestNeighbours = recommendationClient.getNearestNeighbours(3, 7L, 0.01);
 
-        Double predictedRating101 = recommendationClient.getPredictedRating(7L, 101L, nearestNeighbours);
-        Double predictedRating103 = recommendationClient.getPredictedRating(7L, 103L, nearestNeighbours);
-        Double predictedRating106 = recommendationClient.getPredictedRating(7L, 106L, nearestNeighbours);
+        Double predictedRating101 = recommendationClient.getPredictedRating(101L, nearestNeighbours);
+        Double predictedRating103 = recommendationClient.getPredictedRating(103L, nearestNeighbours);
+        Double predictedRating106 = recommendationClient.getPredictedRating(106L, nearestNeighbours);
 
         List<List<Double>> nearestNeighbours4 = recommendationClient.getNearestNeighbours(3, 4L, 0.01);
-        Double predictedRating101user4 = recommendationClient.getPredictedRating(4L, 101L, nearestNeighbours4);
+        Double predictedRating101user4 = recommendationClient.getPredictedRating(101L, nearestNeighbours4);
 
         int sizeBefore = Main.data.get(7L).size();
         Main.addData(7L, 106L, 2.8);
         Assert.assertTrue(Main.data.get(7L).size() == sizeBefore + 1);
 
-        Double predictedRating101New = recommendationClient.getPredictedRating(7L, 101L, nearestNeighbours);
-        Double predictedRating103New = recommendationClient.getPredictedRating(7L, 103L, nearestNeighbours);
+        Double predictedRating101New = recommendationClient.getPredictedRating(101L, nearestNeighbours);
+        Double predictedRating103New = recommendationClient.getPredictedRating(103L, nearestNeighbours);
 
         Assert.assertNotSame(predictedRating101New, predictedRating101);
         Assert.assertNotSame(predictedRating103New, predictedRating103);
