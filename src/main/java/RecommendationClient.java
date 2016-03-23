@@ -58,8 +58,10 @@ public class RecommendationClient {
 
         List<List<Double>> result = new ArrayList<List<Double>>();
 
+        List<List<Double>> nearestNeighbours = getNearestNeighbours(25, originUserId, 0.35);
+
         for (Movie movie : movies) {
-            Double predictedRating = getPredictedRating(originUserId, movie.getId(), 25, 0.35, amountOfRecommendations);
+            Double predictedRating = getPredictedRating(originUserId, movie.getId(), nearestNeighbours, amountOfRecommendations);
             if (predictedRating == null) {
                 continue;
             }
@@ -79,13 +81,12 @@ public class RecommendationClient {
         return result;
     }
 
-    public Double getPredictedRating(Long targetId, Long articleId) {
-        return getPredictedRating(targetId, articleId, 3, 0.01, 1);
+    public Double getPredictedRating(Long targetId, Long articleId, List<List<Double>> neighbours) {
+        return getPredictedRating(targetId, articleId, neighbours, 1);
     }
 
-    public Double getPredictedRating(Long targetId, Long articleId, int amountOfNeighbours, Double threshold, int amountOfRecommendations) {
+    public Double getPredictedRating(Long targetId, Long articleId, List<List<Double>> neighbours, int amountOfRecommendations) {
         Map<Long, Map<Long, Preference>> data = getData();
-        List<List<Double>> neighbours = getNearestNeighbours(amountOfNeighbours, targetId, threshold);
 
         double sumRatingTimesCoefficient = 0.0;
         double sumCoefficient = 0.0;
