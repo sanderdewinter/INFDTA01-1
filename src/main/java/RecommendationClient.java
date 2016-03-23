@@ -61,7 +61,7 @@ public class RecommendationClient {
         List<List<Double>> nearestNeighbours = getNearestNeighbours(25, originUserId, 0.35);
 
         for (Item item : items) {
-            Double predictedRating = getPredictedRating(item.getId(), nearestNeighbours, amountOfRecommendations);
+            Double predictedRating = getPredictedRating(item.getId(), nearestNeighbours, amountRatingsAtLeast);
             if (predictedRating == null) {
                 continue;
             }
