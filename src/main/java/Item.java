@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Movie {
+public class Item {
     private long id;
     private String title;
     private Date releaseDate;
@@ -9,7 +9,11 @@ public class Movie {
 
     private Map<String, Boolean> genres;
 
-    public Movie(long id, String title, Date releaseDate, Date videoReleaseDate, String url, List<Integer> genres) {
+    public Item(long id) {
+        this.id = id;
+    }
+
+    public Item(long id, String title, Date releaseDate, Date videoReleaseDate, String url, List<Integer> genres) {
         this.id = id;
         this.title = title;
         this.releaseDate = releaseDate;

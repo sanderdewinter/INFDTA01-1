@@ -1,28 +1,27 @@
 import java.time.Instant;
 
 public class Preference {
-    private Article article;
-    private Movie movie;
+    private Item item;
     private double rating;
     private Instant timestamp;
 
-    public Preference(Article article, double rating) {
-        this.article = article;
+    public Preference(Item item, double rating) {
+        this.item = item;
         this.rating = rating;
     }
 
-    public Preference(Movie movie, double rating, Instant timestamp) {
-        this.movie = movie;
+    public Preference(Item item, double rating, Instant timestamp) {
+        this.item = item;
         this.rating = rating;
         this.timestamp = timestamp;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public Item getItem() {
+        return item;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public double getRating() {
@@ -31,14 +30,6 @@ public class Preference {
 
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
     }
 
     public Instant getTimestamp() {

@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class MovieLensService {
-    public static List<Movie> movies;
+    public static List<Item> items;
     public static List<User> users;
 
     public static Map<Long, Map<Long, Preference>> data;
@@ -18,7 +18,7 @@ public class MovieLensService {
         String file = "src/main/resources/u.item";
         BufferedReader in = new BufferedReader(new FileReader(file));
 
-        List<Movie> result = new ArrayList<Movie>();
+        List<Item> result = new ArrayList<Item>();
 
         String line;
         while((line = in.readLine()) != null) {
@@ -45,7 +45,7 @@ public class MovieLensService {
                 genres.add(Integer.valueOf(data[i]));
             }
 
-            result.add(new Movie(
+            result.add(new Item(
                     Long.valueOf(data[0]),
                     data[1],
                     dateRelease,
@@ -56,7 +56,7 @@ public class MovieLensService {
         }
         in.close();
 
-        movies = result;
+        items = result;
     }
 
     public static void loadUsers() throws IOException {
@@ -104,7 +104,7 @@ public class MovieLensService {
             preferences.put(
                     Long.parseLong(data[1]),
                     new Preference(
-                            movies.get(movieId),
+                            items.get(movieId),
                             Double.parseDouble(data[2]),
                             Instant.ofEpochSecond(Long.parseLong(data[3]))
                     )

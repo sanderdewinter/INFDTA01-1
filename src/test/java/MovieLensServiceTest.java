@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class MovieLensServiceTest {
 
-    private List<Movie> movies;
+    private List<Item> movies;
     private List<User> users;
 
     public Map<Long, Map<Long, Preference>> data;
@@ -19,7 +19,7 @@ public class MovieLensServiceTest {
         MovieLensService.loadMovies();
         MovieLensService.loadUsers();
         MovieLensService.loadUserPreference();
-        this.movies = MovieLensService.movies;
+        this.movies = MovieLensService.items;
         this.users = MovieLensService.users;
         this.data = MovieLensService.data;
     }

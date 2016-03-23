@@ -12,7 +12,7 @@ public class Main {
             Map<Long, Preference> preferences = data.get(userId);
             preferences.put(
                     articleId,
-                    new Preference(new Article(articleId), rating)
+                    new Preference(new Item(articleId), rating)
             );
 
             data.put(userId, preferences);
@@ -21,7 +21,7 @@ public class Main {
 
             preferences.put(
                     articleId,
-                    new Preference(new Article(articleId), rating)
+                    new Preference(new Item(articleId), rating)
             );
 
             data.put(userId, preferences);
@@ -48,7 +48,7 @@ public class Main {
             preferences.put(
                     Long.parseLong(data[1]),
                     new Preference(
-                            new Article(Long.parseLong(data[1])),
+                            new Item(Long.parseLong(data[1])),
                             Double.parseDouble(data[2])
                     )
             );

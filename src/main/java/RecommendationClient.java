@@ -54,20 +54,20 @@ public class RecommendationClient {
     }
 
     public List<List<Double>> getTopRecommendations(int amountOfRecommendations, Long originUserId, int amountRatingsAtLeast) {
-        List<Movie> movies = MovieLensService.movies;
+        List<Item> items = MovieLensService.items;
 
         List<List<Double>> result = new ArrayList<List<Double>>();
 
         List<List<Double>> nearestNeighbours = getNearestNeighbours(25, originUserId, 0.35);
 
-        for (Movie movie : movies) {
-            Double predictedRating = getPredictedRating(originUserId, movie.getId(), nearestNeighbours, amountOfRecommendations);
+        for (Item item : items) {
+            Double predictedRating = getPredictedRating(originUserId, item.getId(), nearestNeighbours, amountOfRecommendations);
             if (predictedRating == null) {
                 continue;
             }
 
             List<Double> row = new ArrayList<Double>();
-            row.add((double) movie.getId());
+            row.add((double) item.getId());
             row.add(predictedRating);
 
             result.add(row);

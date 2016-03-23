@@ -11,7 +11,7 @@ public class Cosine implements ISimilarity {
             Preference origin = originUser.get(articleId);
 
             if (origin == null) {
-                origin = new Preference(target.getArticle(), 0.0);
+                origin = new Preference(target.getItem(), 0.0);
             }
 
             sumOriginTimesTargetRating += target.getRating() * origin.getRating();
