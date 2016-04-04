@@ -1,11 +1,15 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
     public static Map<Long, Map<Long, Preference>> data;
+
+    public static List<Item> items;
 
     public static void addData(Long userId, Long articleId, Double rating) {
         if (data.containsKey(userId)) {
@@ -33,6 +37,7 @@ public class Main {
         BufferedReader in = new BufferedReader(new FileReader(file));
 
         Map<Long, Map<Long, Preference>> result = new HashMap<Long, Map<Long, Preference>>();
+        List<Item> itemsResult = new ArrayList<Item>();
 
         String line;
         while((line = in.readLine()) != null) {
@@ -45,13 +50,18 @@ public class Main {
                 preferences = result.get(Long.parseLong(data[0]));
             }
 
+            Item item = new Item(Long.parseLong(data[1]));
             preferences.put(
                     Long.parseLong(data[1]),
                     new Preference(
-                            new Item(Long.parseLong(data[1])),
+                            item,
                             Double.parseDouble(data[2])
                     )
             );
+
+            if (!itemsResult.contains(item)) {
+                itemsResult.add(item);
+            }
 
             result.put(
                     Long.parseLong(data[0]),
@@ -61,5 +71,6 @@ public class Main {
         in.close();
 
         data = result;
+        items = itemsResult;
     }
 }

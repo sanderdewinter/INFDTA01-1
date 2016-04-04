@@ -105,4 +105,9 @@ public class Item {
     public void setVideoReleaseDate(Date videoReleaseDate) {
         this.videoReleaseDate = videoReleaseDate;
     }
+
+    @Override
+    public boolean equals(Object object) {
+        return object != null && object instanceof Item && this.id == ((Item) object).id;
+    }
 }
