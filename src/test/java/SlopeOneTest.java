@@ -38,7 +38,28 @@ public class SlopeOneTest {
     public void testGetPredictedRating() {
         SlopeOne slopeOne = new SlopeOne(Main.data, Main.items);
 
-        Double predictedRating = slopeOne.getPredictedRating(4L, 101L);
-        Assert.assertNotNull(predictedRating);
+//        Double predictedRating = slopeOne.getPredictedRating(7L, 101L);
+//        Double predictedRating2 = slopeOne.getPredictedRating(7L, 103L);
+        Double predictedRating3 = slopeOne.getPredictedRating(7L, 106L);
+        Assert.assertNotNull(predictedRating3);
+    }
+
+    @Test
+    public void testGetTopPredictedRating() {
+        SlopeOne slopeOne = new SlopeOne(Main.data, Main.items);
+
+        List<List<Double>> topPredictions = slopeOne.getTopPredictions(4L, 5);
+        Assert.assertNotNull(topPredictions);
+    }
+
+    @Test
+    public void testUpdateDeviationMatrix() {
+        SlopeOne slopeOne = new SlopeOne(Main.data, Main.items);
+        Map<List<Long>, List<Double>> deviationMatrix = slopeOne.getDeviationMatrix();
+
+        Main.addData(3L, 105L, 4.0);
+        slopeOne.updateDeviationMatrix(105L);
+
+        Assert.assertNotSame(deviationMatrix, slopeOne.getDeviationMatrix());
     }
 }

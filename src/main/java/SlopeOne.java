@@ -6,6 +6,12 @@ public class SlopeOne {
     private List<Item> items;
     private Map<List<Long>, List<Double>> deviationMatrix;
 
+    private Comparator<List<Double>> comparator = new Comparator<List<Double>>() {
+        public int compare(List<Double> i, List<Double> j) {
+            return j.get(1).compareTo(i.get(1));
+        }
+    };
+
     public SlopeOne(Map<Long, Map<Long, Preference>> data, List<Item> items) {
         this.data = data;
         this.items = items;
@@ -33,6 +39,28 @@ public class SlopeOne {
         } else {
             return i / j;
         }
+    }
+
+    public List<List<Double>> getTopPredictions(long targetId, int amountOfRecommendations) {
+        List<List<Double>> result = new ArrayList<List<Double>>();
+        Map<Long, Preference> preferenceMap = data.get(targetId);
+
+        for (Long itemId : preferenceMap.keySet()) {
+            Double predictedRating = getPredictedRating(targetId, itemId);
+
+            List<Double> row = new ArrayList<Double>();
+            row.add(Double.valueOf(itemId));
+            row.add(predictedRating);
+
+            result.add(row);
+            Collections.sort(result, comparator);
+
+            if (amountOfRecommendations < result.size()) {
+                result.remove(result.size() - 1);
+            }
+        }
+
+        return result;
     }
 
     public List<Double> getDeviation(long itemId1, long itemId2) {
@@ -76,6 +104,20 @@ public class SlopeOne {
         }
 
         return result;
+    }
+
+    public void updateDeviationMatrix(long itemId) {
+//        Map<List<Long>, List<Double>> result = getDeviationMatrix();
+//
+//        for (List<Long> itemIds : deviationMatrix.keySet()) {
+//            if (itemIds.contains(itemId)) {
+//                List<Double> deviation = getDeviation(itemIds.get(0), itemIds.get(1));
+//                result.remove(itemIds);
+//                result.put(itemIds, deviation);
+//            }
+//        }
+//
+//        deviationMatrix = result;
     }
 
     public Map<List<Long>, List<Double>> getDeviationMatrix() {

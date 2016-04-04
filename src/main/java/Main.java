@@ -14,10 +14,15 @@ public class Main {
     public static void addData(Long userId, Long articleId, Double rating) {
         if (data.containsKey(userId)) {
             Map<Long, Preference> preferences = data.get(userId);
-            preferences.put(
-                    articleId,
-                    new Preference(new Item(articleId), rating)
-            );
+
+            if (preferences.containsKey(articleId)) {
+                preferences.get(articleId).setRating(rating);
+            } else {
+                preferences.put(
+                        articleId,
+                        new Preference(new Item(articleId), rating)
+                );
+            }
 
             data.put(userId, preferences);
         } else {
