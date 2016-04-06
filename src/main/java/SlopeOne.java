@@ -107,17 +107,17 @@ public class SlopeOne {
     }
 
     public void updateDeviationMatrix(long itemId) {
-//        Map<List<Long>, List<Double>> result = getDeviationMatrix();
-//
-//        for (List<Long> itemIds : deviationMatrix.keySet()) {
-//            if (itemIds.contains(itemId)) {
-//                List<Double> deviation = getDeviation(itemIds.get(0), itemIds.get(1));
-//                result.remove(itemIds);
-//                result.put(itemIds, deviation);
-//            }
-//        }
-//
-//        deviationMatrix = result;
+        Map<List<Long>, List<Double>> result = getDeviationMatrix();
+
+        for (List<Long> itemIds : deviationMatrix.keySet()) {
+            if (itemIds.contains(itemId)) {
+                List<Double> deviation = getDeviation(itemIds.get(0), itemIds.get(1));
+
+                result.put(itemIds, deviation);
+            }
+        }
+
+        deviationMatrix = result;
     }
 
     public Map<List<Long>, List<Double>> getDeviationMatrix() {
